@@ -1,0 +1,42 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Task List</h1>
+
+        <div>
+            <h2>Filter Tasks:</h2>
+            <a href="?filter=all">All</a>
+            <a href="?filter=completed">Completed</a>
+            <a href="?filter=not_completed">Not Completed</a>
+        </div>
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <a href="{% url 'task-detail' task.id %}" style="text-decoration: none; color: inherit;">
+                        <strong>{{ task.title }}</strong>
+                    </a>
+                    : {{ task.description }}
+                    {% if task.is_completed %}
+                        - <span style="color: green;">Completed</span>
+                    {% else %}
+                        - <span style="color: red;">Not Completed</span>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No tasks found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
